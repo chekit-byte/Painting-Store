@@ -1,0 +1,41 @@
+﻿@page
+@model PaintingStore.Pages.Paintings.PaintingsModel
+@{
+    ViewData["Title"] = "Paintings";
+}
+
+<form class="mb-3" method="get">
+    <div class="input-group">
+        <input class="form-control" asp-for="SearchTerm"/>
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-outline-dark">Search</button>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    @foreach (var item in Model.Paintings)
+    {
+        var photoPath = $"/images/{item.Photopath ?? "noimage.png"}";
+
+        <div class="col-4 col-lg-4 col-sm-1">
+            <div class="card-deck">
+                <div class="card m-3">
+                    <div class="card-header text-center">
+                        <h3>@item.Name</h3>
+                    </div>
+
+                    <div class="card-body text-center">
+                        <img class="card-img-top" src=@photoPath asp-append-version="true" />
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <a class="btn btn-dark m-1" asp-route-ID="@item.Id" asp-page="/Paintings/Details">View</a>
+                        <a class="btn btn-dark m-1" asp-page="/Paintings/Basket" asp-route-Id="@item.Id">Add</a>
+                        <a class="btn btn-dark m-1" asp-route-ID="@item.Id" asp-page="/Paintings/Edit">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
